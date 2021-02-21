@@ -25,7 +25,7 @@ def test_read_not_found():
     assert sol.items == [("a", 100), ("b", 200), ("c", 300)]
 
 
-def test_delete():
+def test_move_to_top():
     sol = SelfOrganisingList(initial_items=[("a", 100), ("b", 200), ("c", 300)])
-    assert sol.delete_and_get_item("b") == ("b", 200)
-    assert sol.items == [("a", 100), ("c", 300)]
+    assert sol.move_to_top("b") == ("b", 200)
+    assert sol.items == [("b", 200), ("a", 100), ("c", 300)]
