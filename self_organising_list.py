@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+#
+# A self organising list is a simple dictionary implementation
+# that pushes each item to the top of the list whenever it is
+# written to or read from.
+#
 
 class SelfOrganisingList:
     def __init__(self, initial_items=None):
@@ -31,10 +36,15 @@ def main():
     sol = SelfOrganisingList(initial_items=[("a", 100), ("b", 200), ("c", 300)])
 
     print(sol.items)
+    # >>> [("a", 100), ("b", 200), ("c", 300)]
+
+    sol.read("b")
+    print(sol.items)
+    # >>> [("b", 200), ("a", 100), ("c", 300)]
 
     sol.write("c", 350)
-
     print(sol.items)
+    # >>> [("c", 350), ("a", 100), ("b", 200)]
 
 
 if __name__ == "__main__":
