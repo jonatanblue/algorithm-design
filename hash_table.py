@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from typing import Any, List
 
 
 class HashTable:
@@ -6,6 +7,7 @@ class HashTable:
         self.m = 113  # Should be a prime number, larger than len(key)
         self.alphabet = "abcdefghijklmnopqrstuvwxyz"
         self.alpha = len(self.alphabet)
+        self.table: List[Any] = [None] * self.m
 
     def char(self, letter):
         return self.alphabet.index(letter) + 1
@@ -23,11 +25,36 @@ class HashTable:
             return product % self.m
         return (product + self.make_hash(key=key[1:])) % self.m
 
+    def read(self, key: str):
+        key_index = self.make_hash(key=key)
+        return self.table[key_index]
+
+    def write(self, key: str, value: Any):
+        key_index = self.make_hash(key=key)
+        existing_value = self.table[key_index]
+        if existing_value:
+            raise RuntimeError("Collision handling not implemented")
+        self.table[key_index] = value
+
+
+def test_table():
+    ht = HashTable()
+    test_keys = [
+        "abc",
+        "bcd",
+        "cde",
+        "def",
+        "efg"
+    ]
+    for key in test_keys:
+        ht.write(key=key, value=key)
+
+    for key in test_keys:
+        assert ht.read(key=key) == key
+
 
 def main():
-    ht = HashTable()
-    print(ht.make_hash("abc"))
-    # >>> 33
+    test_table()
 
 
 if __name__ == "__main__":
