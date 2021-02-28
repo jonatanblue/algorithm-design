@@ -78,3 +78,51 @@ func TestOverwriteExistingKey(t *testing.T) {
 		t.Errorf("got %v, want %v", actualItems, expectedItems)
 	}
 }
+
+func TestReadNotFound(t *testing.T) {
+	sol := Sol{}
+	sol.items = []KeyValuePair{
+		{key: "a", value: 100},
+		{key: "b", value: 200},
+		{key: "c", value: 300},
+	}
+
+	readResult := sol.Read("d")
+	if len(readResult) != 0 {
+		t.Errorf("got %v, want []", readResult)
+	}
+
+	expectedItems := []KeyValuePair{
+		{key: "a", value: 100},
+		{key: "b", value: 200},
+		{key: "c", value: 300},
+	}
+	actualItems := sol.items
+	if !reflect.DeepEqual(actualItems, expectedItems) {
+		t.Errorf("got %v, want %v", actualItems, expectedItems)
+	}
+}
+
+func TestMoveToTop(t *testing.T) {
+	sol := Sol{}
+	sol.items = []KeyValuePair{
+		{key: "a", value: 100},
+		{key: "b", value: 200},
+		{key: "c", value: 300},
+	}
+
+	moveResult := sol.MoveToTop("b")
+	if moveResult == nil {
+		t.Errorf("got %v, want nil", moveResult)
+	}
+
+	expectedItems := []KeyValuePair{
+		{key: "b", value: 200},
+		{key: "a", value: 100},
+		{key: "c", value: 300},
+	}
+	actualItems := sol.items
+	if !reflect.DeepEqual(actualItems, expectedItems) {
+		t.Errorf("got %v, want %v", actualItems, expectedItems)
+	}
+}

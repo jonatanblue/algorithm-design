@@ -10,7 +10,7 @@ type Sol struct {
 }
 
 func (s *Sol) Read(key string) []int {
-	foundItem := s.moveToTop(key)
+	foundItem := s.MoveToTop(key)
 	if foundItem != nil {
 		return []int{foundItem.value}
 	}
@@ -22,7 +22,7 @@ func (s *Sol) Write(key string, value int) {
 		key:   key,
 		value: value,
 	}
-	if s.moveToTop(key) == nil {
+	if s.MoveToTop(key) == nil {
 		refreshedItems := []KeyValuePair{newItem}
 		refreshedItems = append(refreshedItems, s.items...)
 		s.items = refreshedItems
@@ -31,7 +31,7 @@ func (s *Sol) Write(key string, value int) {
 	s.items[0] = newItem
 }
 
-func (s *Sol) moveToTop(key string) *KeyValuePair {
+func (s *Sol) MoveToTop(key string) *KeyValuePair {
 	for index, item := range s.items {
 		if item.key == key {
 			refreshedItems := []KeyValuePair{item}
